@@ -1,0 +1,41 @@
+# Docker-Compose
+
+################################################
+# Services
+################################################
+
+services:
+
+  ################################################
+  # ComfyUI
+  ################################################
+
+  comfyui:
+    image: "automaatio/comfyui:0.3.12"
+    container_name: "comfyui"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES}
+      CUDA_VISIBLE_DEVICES: ${CUDA_VISIBLE_DEVICES}
+      NVIDIA_DRIVER_CAPABILITIES: ${NVIDIA_DRIVER_CAPABILITIES}
+      LISTEN_ADDRESS: ${LISTEN_ADDRESS}
+    runtime: "nvidia"
+    restart: "unless-stopped"
+    ports:
+      - "8188:8188"
+    volumes:
+      - "/home/docker/comfyui/app:/comfyui/app"
+      - "/home/docker/comfyui/venv:/comfyui/venv"
+    networks:
+      - "comfyui"
+
+
+################################################
+# Networks
+################################################
+
+networks:
+  comfyui:
+    name: "comfyui"
