@@ -9,7 +9,7 @@ _Revision Date: 1/21/2025_
 
 # Overview
 
-This image installs Rill based on their install script: `curl https://rill.sh | sh` taken from [https://www.rilldata.com/](https://www.rilldata.com/).
+This image installs ComfyUI within a Docker container using the installation instructions on [ComfyUI Wiki](https://comfyui-wiki.com/en/install/install-comfyui/install-comfyui-on-linux).
 
 
 <!---------- BREAK START ------------->
