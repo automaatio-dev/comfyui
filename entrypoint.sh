@@ -18,28 +18,46 @@ echo " "
 echo "### Clone Repository"
 echo " "
 
-# Check if the repository exists in the volume
-if [ ! -d "/comfyui/app/.git" ]; then
+# Set release tag and URL for this build
+RELEASE_TAG="v0.3.12"
+RELEASE_URL="https://github.com/comfyanonymous/ComfyUI/archive/refs/tags/${RELEASE_TAG}.tar.gz"
+APP_DIR="/comfyui/app"
+TMP_DIR="/comfyui/app_tmp"
+
+
+# Check if the application files are present
+if [ ! -f "${APP_DIR}/README.md" ]; then
 
     # Print status
-    echo "    Alert: Repository not found. Cloning the ComfyUI repository: https://github.com/comfyanonymous/ComfyUI"
+    echo "    Alert: ComfyUI files not found. Downloading release: ${RELEASE_TAG}"
     echo " "
 
-    # Clone ComfyUI repo
-    git clone https://github.com/comfyanonymous/ComfyUI.git /comfyui/app_tmp
+    # Create a temporary directory
+    mkdir -p "${TMP_DIR}"
 
-    # Move files to the volume directory
-    cp -r /comfyui/app_tmp/* /comfyui/app/
-    find /comfyui/app_tmp -name ".*" -exec cp -r {} /comfyui/app/ \;  # Copy hidden files like .git
-    rm -rf /comfyui/app_tmp
+    # Download the release tarball
+    echo "[ ] Downloading: ${RELEASE_URL}."
+    wget -q -O "${TMP_DIR}/release.tar.gz" "${RELEASE_URL}" || curl -sL -o "${TMP_DIR}/release.tar.gz" "${RELEASE_URL}"
+
+    # Extract the release tarball
+    echo "[ ] Extracting: Release files."
+    tar -xzf "${TMP_DIR}/release.tar.gz" -C "${TMP_DIR}" --strip-components=1
+
+    # Move the files to the application directory
+    echo "[ ] Setup: Moving files to application directory."
+    mkdir -p "${APP_DIR}"
+    cp -r "${TMP_DIR}/"* "${APP_DIR}/"
+
+    # Clean up the temporary directory
+    rm -rf "${TMP_DIR}"
 
     # Print status
-    echo "[✔] Status: Repository cloned successfully."
+    echo "[✔] Status: Release ${RELEASE_TAG} set up successfully."
 
 else
-
+    
     # Print status
-    echo "[✔] Status: Repository found."
+    echo "[✔] Status: ComfyUI files found. Skipping download."
 
 fi
 
