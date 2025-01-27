@@ -45,6 +45,35 @@ fi
 
 
 ################################################################
+### Install ComfyUI-Manager
+################################################################
+
+echo " "
+echo "### Install ComfyUI-Manager"
+echo " "
+
+# Check if ComfyUI-Manager is already installed
+if [ ! -d "/comfyui/app/custom_nodes/comfyui-manager/.git" ]; then
+
+    # Print status
+    echo "    Alert: ComfyUI-Manager not found. Cloning the repository: https://github.com/ltdrdata/ComfyUI-Manager"
+    echo " "
+
+    # Clone ComfyUI-Manager repo
+    git clone https://github.com/ltdrdata/ComfyUI-Manager /comfyui/app/custom_nodes/comfyui-manager
+
+    # Print status
+    echo "[✔] Status: ComfyUI-Manager installed successfully."
+
+else
+
+    # Print status
+    echo "[✔] Status: ComfyUI-Manager already installed."
+
+fi
+
+
+################################################################
 ### Virtual Environment
 ################################################################
 
