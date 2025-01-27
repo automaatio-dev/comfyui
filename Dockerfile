@@ -1,6 +1,6 @@
 ###
 # Created on 1/20/2025
-# Modified on 1/21/2025
+# Modified on 1/27/2025
 # Image Name: comfyui
 ###
 
@@ -45,7 +45,7 @@ RUN chown -R ${APP_USER}:${APP_USER} ${WORKDIR}
 
 # Install required system packages and clean up
 RUN apt-get update && \
-    apt-get install -y git python3-venv && \
+    apt-get install -y git python3-venv wget curl && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy entrypoint script to the image
